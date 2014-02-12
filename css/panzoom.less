@@ -1,0 +1,114 @@
+/**
+* panzoom.css
+* 
+* @project   PAN ZOOM FULLSCREEN
+* @date      2014-02-12 
+* @author    Nisheed Jagadish<nisheed2016@gmail.com>
+* @licensor  SapientNitro
+* @site      FNF
+*
+* @dependency: lesshat-prefixed.less
+*/
+
+@import "lesshat-prefixed";
+
+@pz-background-image:url('../img/tiny_grid.png');
+@pz-background-color:#ebebed;
+@pz-control-bg-color:#16a085;
+@pz-control-bg-hover:#1abc9c;
+@pz-control-txt-color:#FFFFFF;
+
+
+body{
+	margin:0;
+}
+
+.panzoom-wrapper{
+	background:@pz-background-image;
+	background-repeat:repeat;
+	background-color:@pz-background-color;
+	position:absolute;
+	width:100%;
+	height:100%;
+	overflow: hidden;
+}
+
+.pz-control-mixin{
+	display:block;
+	width: 30px;
+	height: 30px;
+	color:@pz-control-txt-color;
+	background-color:@pz-control-bg-color;
+	font-size: 29px;
+	text-align: center;
+	line-height: 30px;
+	font-weight: bold;
+	text-decoration:none;
+	&:hover{
+		background-color:@pz-control-bg-hover;
+	}
+}
+
+.panzoom-close{
+	position:absolute;
+	top:5px;
+	right:5px;
+	.pz-control-mixin;
+}
+
+.panzoom-image{
+	.lh-box-shadow(0 0 8px rgba(0,0,0,0.3));
+}
+.panzoom-controls{
+	width:30px;
+	position:absolute;
+	top:50%;
+	right:5px;
+	visibility:hidden;
+	.lh-transition(top 0.3s ease);
+	
+	&.visible{
+		visibility:visible;
+	}
+	
+	a.panzoom-control{
+		.pz-control-mixin;
+		
+		&.scale-up{
+			margin-bottom: 8px;
+		}
+		&.scale-down{
+			margin-top: 15px;
+		}
+	}
+	.slider{
+		height: 150px;
+		.lh-border-radius(0);
+		border-width:0;
+		width: 6px;
+		left: 12px;
+		background:#7f8c8d;
+		
+		.ui-slider-range.ui-widget-header{
+			background:@pz-control-bg-color;
+			.lh-border-radius(0);
+		}
+		.ui-slider-handle{
+			.lh-border-radius(0);
+			background:@pz-control-bg-color;
+			width:30px;
+			height:15px;
+			left:-12px;
+			border-width:0;
+		}
+		
+		&:hover{
+			.ui-slider-range.ui-widget-header{
+				background:@pz-control-bg-hover;
+			}
+			.ui-slider-handle{
+				background:@pz-control-bg-hover;
+			}
+		}
+	}
+}
