@@ -15,35 +15,78 @@
 
 	var fnfPanZoom = function(el,opts){
 
-		var instance = this;
-		this.el = el;
-		this.elWrapper = $(this.el).parent('.panzoom-wrapper');
-		this.controls = $(this.elWrapper).find('.panzoom-controls')[0];
-		this.imgOriginalWidth  = 0;
-		this.imgOriginalHeight = 0;
-		this.wrapperWidth  = 0;
-		this.wrapperHeight = 0;
+		var instance 			= this;
+		
+		this.opts				= opts;
+		this.el 				= el;
+		this.$el 				= $(el);
+		this.$wrap				= false;
+		
+		this.wrapW  			= 0;
+		this.wrapH 				= 0;
+		
+		this.$ctrlWrap    		= false;
+		this.$ctrlSlider      	= false;
+		this.$ctrlMagnify		= false;
+		this.$ctrlMinify  		= false;
+		
+		this.imgOrgW  			= 0;
+		this.imgOrgH 			= 0;
+		
 
-		this.setOriginalDimensions = function(){
+		var _initElements = function(){
+			instance.$wrap 		  = instance.$el.parent('.' + instance.opts.wrapperCls);
+			instance.$ctrlWrap	  = instance.$wrap.find('.' + instance.opts.controlsWrapperCls).first();
+			instance.$ctrlSlider  = instance.$ctrlWrap.find('.' + instance.opts.controlSliderCls).first();
+			instance.$ctrlMagnify = instance.$ctrlWrap.find('.' + instance.opts.controlScaleUpCls).first();
+			instance.$ctrlMinify  = instance.$ctrlWrap.find('.' + instance.opts.controlScaleDownCls).first();
+
+			return (instance.$wrap.length > 0 && instance.$ctrlWrap.length > 0);
+		}
+		
+		this.updateInstanceVars = function(){
+			this.wrapW = instance.$wrap.width();
+			this.wrapH = instance.$wrap.height();
+			this.updateControlPosition();
+			
+			return instance;
+		};
+		
+
+		this.updateControlPosition = function(){
+			
+			var controlH   = instance.$ctrlWrap.outerHeight();
+			var controlHH  = Math.round(controlH/2,2);
+			var wrapperHH  = Math.round(instance.wrapH/2,2);
+			var controlTop = wrapperHH - controlHH;
+			
+			this.$ctrlWrap.css('top',controlTop);
+			
+			return instance;
+		};
+		
+		var _setOriginalDimensions = function(){
 
 			//Bind on-load for the image
-			instance.imgOriginalWidth  = $(instance.el).width();
-			instance.imgOriginalHeight = $(instance.el).height();
+			instance.imgOrgW  = instance.$el.width();
+			instance.imgOrgH  = instance.$el.height();
 			instance.updateInstanceVars();
 
 			//Update variables on window resize
 			$(window).resize(function(){
 				instance.updateInstanceVars();
 			});
-
-			return true;
+			
+			return instance;
+		};
+		
+		var _setImageCenterZoom = function(){
+			instance.$el.width('100%');
 		};
 
-		this.initControls = function(){
-			var slider  = $(this.controls).find('.panzoom-control.slider')[0],
-			$slider = $(slider);
+		var _initControls = function(){
 			//Initialize the slider
-			$slider.slider({
+			instance.$ctrlSlider.slider({
 				orientation: "vertical",
 				range:'min',
 				min: 0,
@@ -53,46 +96,44 @@
 					console.log(ui);
 				}
 			});
-			$(this.controls).addClass('visible');
+			instance.$ctrlWrap.addClass('visible');
+			
+			return false;
 		};
-
-		this.updateControlPosition = function(){
-			var $control  = $(this.controls);
-			var controlH  = $control.outerHeight();
-			var controlHH = Math.round(controlH/2,2);
-			var wrapperHH = Math.round(this.wrapperHeight/2,2);
-			var controlTop = wrapperHH - controlHH;
-
-			$control.css('top',controlTop);
-		};
-
-		this.updateInstanceVars = function(){
-			this.wrapperWidth = $(instance.elWrapper).width();
-			this.wrapperHeight = $(instance.elWrapper).height();
-			this.updateControlPosition();
-			console.log(instance);
-		};
-
-		this.setImgCenteredZoom = function(){
-
-		};
-
+		
 		this.init = function(){
 			$el = $(this.el);
 			if($el.prop("tagName") !== 'IMG'){
 				return false;
 			}
-			this.setOriginalDimensions();
-			this.initControls();
+			
+			var initialized = _initElements();
+			if(initialized === true){
+				_setOriginalDimensions();
+				_initControls();
+				_setImageCenterZoom();
+				return true;
+			}
 
-			return true;
+			return false;
 		};
 	};
 
-	$.fn.fnfpanzoom = function(){
+	$.fn.fnfpanzoom = function(options){
 
+		var defaults = {
+			wrapperCls			:'panzoom-wrapper',
+			controlsWrapperCls	:'panzoom-controls',
+			controlSliderCls	:'panzoom-control--slider',
+			controlScaleUpCls	:'panzoom-control--scale-up',
+			controlScaleDownCls	:'panzoom-control--scale-down'
+			
+		};
+		
+		var settings = $.extend(defaults,options,true);
+		
 		return this.each(function(){
-			var panZoomInstance = new fnfPanZoom(this);
+			var panZoomInstance = new fnfPanZoom(this,settings);
 			panZoomInstance.init();
 		});
 	}

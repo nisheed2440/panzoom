@@ -2,9 +2,9 @@
 <div class="panzoom-wrapper">
 	<a class="panzoom-close" href="javascript:void(0);">&times;</a>
 	<div class="panzoom-controls">
-		<a class="panzoom-control scale-up" href="javascript:void(0);">+</a>
-		<div class="panzoom-control slider"></div>
-		<a class="panzoom-control scale-down" href="javascript:void(0);">&minus;</a>
+		<a class="panzoom-control panzoom-control--scale-up" href="javascript:void(0);">+</a>
+		<div class="panzoom-control panzoom-control--slider"></div>
+		<a class="panzoom-control panzoom-control--scale-down" href="javascript:void(0);">&minus;</a>
 	</div>
 	<img id="test1" class="panzoom-image" data-original="http://www.placehold.it/1080x1080">
 </div>

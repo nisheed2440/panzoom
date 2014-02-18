@@ -70,18 +70,15 @@ body{
 	&.visible{
 		visibility:visible;
 	}
-	
-	a.panzoom-control{
+	.panzoom-control--scale-up{
 		.pz-control-mixin;
-		
-		&.scale-up{
-			margin-bottom: 8px;
-		}
-		&.scale-down{
-			margin-top: 15px;
-		}
+		margin-bottom: 10px;
 	}
-	.slider{
+	.panzoom-control--scale-down{
+		.pz-control-mixin;
+		margin-top: 10px;
+	}
+	.panzoom-control--slider{
 		height: 150px;
 		.lh-border-radius(0);
 		border-width:0;
@@ -95,9 +92,13 @@ body{
 		}
 		.ui-slider-handle{
 			.lh-border-radius(0);
+			@slider-handle-width : 30px;
+			@slider-handle-height : 15px;
+			 
 			background:@pz-control-bg-color;
-			width:30px;
-			height:15px;
+			width:@slider-handle-width;
+			height:@slider-handle-height;
+			margin-bottom: -(@slider-handle-height/2);
 			left:-12px;
 			border-width:0;
 		}
