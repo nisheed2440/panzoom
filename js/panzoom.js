@@ -33,6 +33,7 @@
 		this.imgOrgW  			= 0;
 		this.imgOrgH 			= 0;
 		
+		this.sidebarToggle		= false; 
 
 		var _initElements = function(){
 			instance.$wrap 		  = instance.$el.parent('.' + instance.opts.wrapperCls);
@@ -98,6 +99,9 @@
 			});
 			instance.$ctrlWrap.addClass('visible');
 			
+			
+			
+			
 			return false;
 		};
 		
@@ -111,7 +115,7 @@
 			if(initialized === true){
 				_setOriginalDimensions();
 				_initControls();
-				_setImageCenterZoom();
+				//_setImageCenterZoom();
 				return true;
 			}
 

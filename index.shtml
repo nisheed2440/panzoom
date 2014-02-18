@@ -7,6 +7,14 @@
 		<a class="panzoom-control panzoom-control--scale-down" href="javascript:void(0);">&minus;</a>
 	</div>
 	<img id="test1" class="panzoom-image" data-original="http://www.placehold.it/1080x1080">
+	
+	<div class="panzoom-alt-wrapper">
+		<a class="panzoom-alt-show-hide" href="javascript:void(0);">
+			<span class="bar"></span>
+			<span class="bar"></span>
+			<span class="bar"></span>
+		</a>
+	</div>
 </div>
 
 
