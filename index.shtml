@@ -9,7 +9,7 @@
 	<img id="test1" class="panzoom-image" data-original="http://www.placehold.it/1080x1080">
 	
 	<div class="panzoom-alt-wrapper">
-		<a class="panzoom-alt-show-hide" href="javascript:void(0);">
+		<a class="panzoom-alt-show-hide" href="#">
 			<span class="bar"></span>
 			<span class="bar"></span>
 			<span class="bar"></span>

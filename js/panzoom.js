@@ -29,6 +29,8 @@
 		this.$ctrlSlider      	= false;
 		this.$ctrlMagnify		= false;
 		this.$ctrlMinify  		= false;
+		this.$sideToggle  		= false;
+		
 		
 		this.imgOrgW  			= 0;
 		this.imgOrgH 			= 0;
@@ -41,7 +43,7 @@
 			instance.$ctrlSlider  = instance.$ctrlWrap.find('.' + instance.opts.controlSliderCls).first();
 			instance.$ctrlMagnify = instance.$ctrlWrap.find('.' + instance.opts.controlScaleUpCls).first();
 			instance.$ctrlMinify  = instance.$ctrlWrap.find('.' + instance.opts.controlScaleDownCls).first();
-
+			instance.$sideToggle  = instance.$wrap.find('.' + instance.opts.sidebarToggleCls).first();
 			return (instance.$wrap.length > 0 && instance.$ctrlWrap.length > 0);
 		}
 		
@@ -51,6 +53,22 @@
 			this.updateControlPosition();
 			
 			return instance;
+		};
+		
+		this.sidebarToggleFn = function(){
+			if(this.sidebarToggle === false){
+				this.$sideToggle.parent().animate({
+					'left': -150
+				});
+				this.sidebarToggle = true;
+			}else{
+				this.$sideToggle.parent().animate({
+					'left': 0
+				});
+				this.sidebarToggle = false;
+			}
+			
+			return this.sidebarToggle;
 		};
 		
 
@@ -98,9 +116,12 @@
 				}
 			});
 			instance.$ctrlWrap.addClass('visible');
+
 			
-			
-			
+			instance.$sideToggle.on('click',function(e){
+				e.preventDefault();
+				instance.sidebarToggleFn(); 
+			});
 			
 			return false;
 		};
@@ -130,8 +151,8 @@
 			controlsWrapperCls	:'panzoom-controls',
 			controlSliderCls	:'panzoom-control--slider',
 			controlScaleUpCls	:'panzoom-control--scale-up',
-			controlScaleDownCls	:'panzoom-control--scale-down'
-			
+			controlScaleDownCls	:'panzoom-control--scale-down',
+			sidebarToggleCls	:'panzoom-alt-show-hide'
 		};
 		
 		var settings = $.extend(defaults,options,true);
